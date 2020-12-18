@@ -1,6 +1,8 @@
 .profile__button-edt {
-  max-width: 24px;
-  max-height: 24px;
+  background-image: url(../../../images/Edit\ Button.svg);
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
   margin-left: 18px;
   margin-top: 15px;
 }

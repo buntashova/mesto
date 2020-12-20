@@ -1,8 +1,23 @@
 .profile__description {
   margin: 0;
-  margin-top: 16px;
+  margin-top: 14px;
   padding: 0;
   font-family: Inter, sans-serif;
   font-size: 18px;
   line-height: 1.2;
+  text-align: start;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__description {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile__description {
+    font-size: 14px;
+    line-height: 1.21;
+  }
 }

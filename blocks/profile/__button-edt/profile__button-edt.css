@@ -1,8 +1,23 @@
 .profile__button-edt {
-  background-image: url(../../../images/Edit\ Button.svg);
+  background-image: url(../../../images/Edit_desktop.svg);
   background-repeat: no-repeat;
+  background-color: #000000;
+  border: 1px solid #FFFFFF;
+  background-position: center;
   width: 24px;
   height: 24px;
   margin-left: 18px;
-  margin-top: 15px;
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* right: 0; */
+  /* margin-top: 15px; */
+}
+
+@media screen and (max-width: 768px) {
+  .profile__button-edt {
+    background-image: url(../../../images/Edit_mobile.svg);
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
 }

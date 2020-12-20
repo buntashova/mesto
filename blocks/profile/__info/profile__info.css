@@ -2,7 +2,6 @@
   max-width: 336px;
   padding-right: 244px;
   padding-left: 30px;
-  display: flex;
 }
 
 @media screen and (max-width: 960px) {
@@ -14,5 +13,12 @@
 @media screen and (max-width: 880px) {
   .profile__info {
     padding-right: calc(190px - (880px - 100%));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info {
+    padding-right: 0;
+    padding-left: 0;
   }
 }

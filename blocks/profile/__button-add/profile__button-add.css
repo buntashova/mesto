@@ -1,12 +1,26 @@
 .profile__button-add {
-  background-image: url(../../../images/Add\ Button.svg);
+  background-image: url(../../../images/Add_desktop.svg);
   background-repeat: no-repeat;
+  background-position: center;
   width: 150px;
   height: 50px;
+  background-color: #000000;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  padding: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 960px) {
   .profile__button-add {
     margin-right: 27px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile__button-add {
+    background-image: url(../../../images/Add_mobile.svg);
+    width: 282px;
+    margin-right: 0;
   }
 }

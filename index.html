@@ -83,16 +83,17 @@
   <section class="popup">
     <form class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" name="user" placeholder="Жак-Ив Кусто" class="popup__input">
+      <input type="text" name="user" value="Жак-Ив Кусто" class="popup__input popup__input-name">
       <div class="popup__line"></div>
-      <input type="text" name="about_me" placeholder="Исследователь океана" class="popup__input">
+      <input type="text" name="bio" value="Исследователь океана" class="popup__input popup__input-bio">
       <div class="popup__line"></div>
       <button type="submit" class="popup__button">
         <div class="popup__button-text">Сохранить</div>
       </button>
-      <button class="popup__close"></button>
+      <button type="button" class="popup__close"></button>
     </form>
   </section>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

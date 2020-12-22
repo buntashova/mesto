@@ -4,6 +4,7 @@
   border: none;
   height: 50px;
   cursor: pointer;
+  padding: 0;
 }
 
 .popup__button:hover {

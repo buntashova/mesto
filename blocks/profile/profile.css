@@ -1,6 +1,6 @@
 .profile {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-right: auto;
   margin-left: auto;
   align-items: center;

@@ -1,12 +1,17 @@
 .profile__button-edt {
   background-image: url(../../../images/Edit_desktop.svg);
   background-repeat: no-repeat;
-  background-color: #000000;
   border: 1px solid #FFFFFF;
   background-position: center;
   width: 24px;
   height: 24px;
-  /* margin-left: 18px; */
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.profile__button-edt:hover {
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 768px) {
@@ -14,6 +19,5 @@
     background-image: url(../../../images/Edit_mobile.svg);
     width: 18px;
     height: 18px;
-    /* margin-left: 10px; */
   }
 }

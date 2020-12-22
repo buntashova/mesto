@@ -4,11 +4,17 @@
   background-position: center;
   width: 150px;
   height: 50px;
-  background-color: #000000;
   border: 2px solid #FFFFFF;
   border-radius: 2px;
   padding: 0;
   margin: 0;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.profile__button-add:hover {
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 960px) {

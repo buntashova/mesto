@@ -9,4 +9,4 @@
 Структура проекта выполнена по методологии БЭМ.
 ## ***Проект***
 ***
-Перейти на сайт: https://buntashova.github.io/mestoo/index.html
+Перейти на сайт: https://buntashova.github.io/mesto/

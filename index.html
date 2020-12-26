@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Бунташова Валерия">
   <meta name="description"
-    content="Учебный проект от Яндекс.Практикум на тему: Интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.">
+    content="Учебный проект от Яндекс.Практикум на тему: Интерактивная страница, реализован попап для изменения информации о профиле.">
   <link rel="stylesheet" href="pages/index.css">
   <title>Сервис Место</title>
 </head>
@@ -80,19 +80,19 @@
   <footer class="footer">
     <h3 class="footer__text">© 2020 Mesto Russia</h3>
   </footer>
-  <section class="popup">
+  <div class="popup">
     <form class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" name="user" value="Жак-Ив Кусто" class="popup__input popup__input-name">
+      <input type="text" name="user" class="popup__input popup__input-name">
       <div class="popup__line"></div>
-      <input type="text" name="bio" value="Исследователь океана" class="popup__input popup__input-bio">
+      <input type="text" name="bio" class="popup__input popup__input-bio">
       <div class="popup__line"></div>
       <button type="submit" class="popup__button">
-        <div class="popup__button-text">Сохранить</div>
+        <span class="popup__button-text">Сохранить</span>
       </button>
       <button type="button" class="popup__close"></button>
     </form>
-  </section>
+  </div>
   <script src="./scripts/index.js"></script>
 </body>
 

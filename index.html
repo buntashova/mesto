@@ -21,18 +21,18 @@
       <img class="profile__avatar" src="./images/image.jpg" alt="аватар">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__button-edt"></button>
+        <button type="button" class="profile__button-edt"></button>
         <p class="profile__description">Исследователь океана</p>
 
       </div>
-      <button class="profile__button-add"></button>
+      <button type="button" class="profile__button-add"></button>
     </section>
     <section class="elements">
       <div class="elements__element">
         <img class="elements__image" alt="Карачаевск" src="./images/karachaevsk.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Карачаевск</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
 
@@ -40,7 +40,7 @@
         <img class="elements__image" alt="Эльбрус" src="./images/elbrus.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Гора Эльбрус</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
 
@@ -48,7 +48,7 @@
         <img class="elements__image" alt="Домбай" src="./images/dombay.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Домбай</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
         <img class="elements__image" alt="Эльбрус" src="./images/elbrus2.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Эльбрус</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
         <img class="elements__image" alt="Домбай" src="./images/dombay2.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Домбай</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
 
@@ -72,24 +72,20 @@
         <img class="elements__image" alt="Карачаево-Черкесия" src="./images/karachaevsk2.jpg">
         <div class="elements__description-like">
           <h2 class="elements__description">Карачаево-Черкесия</h2>
-          <button class="elements__like"></button>
+          <button type="button" class="elements__like"></button>
         </div>
       </div>
     </section>
   </main>
   <footer class="footer">
-    <h3 class="footer__text">© 2020 Mesto Russia</h3>
+    <p class="footer__text">© 2020 Mesto Russia</p>
   </footer>
   <div class="popup">
-    <form class="popup__container">
+    <form name="popup-form" class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" name="user" class="popup__input popup__input-name">
-      <div class="popup__line"></div>
-      <input type="text" name="bio" class="popup__input popup__input-bio">
-      <div class="popup__line"></div>
-      <button type="submit" class="popup__button">
-        <span class="popup__button-text">Сохранить</span>
-      </button>
+      <input type="text" name="user" placeholder="Напишите ваше имя" class="popup__input popup__input_type_name">
+      <input type="text" name="bio" placeholder="Расскажите о себе" class="popup__input popup__input_type_bio">
+      <button type="submit" class="popup__button">Сохранить</button>
       <button type="button" class="popup__close"></button>
     </form>
   </div>

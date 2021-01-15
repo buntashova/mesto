@@ -39,6 +39,10 @@ const addForm = addPopup.querySelector(".popup__container");
 
 const nameInput = document.querySelector(".popup__input_type_name");
 const bioInput = document.querySelector(".popup__input_type_bio");
+
+const titleInput = document.querySelector(".popup__input_type_title");
+const linkInput = document.querySelector(".popup__input_type_link");
+
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
@@ -50,12 +54,18 @@ function handleFormSubmit(evt) {
   evt.preventDefault();
 
   if (evt.target === edtForm) {
-    profileName.textContent = nameInput.value;;
+    profileName.textContent = nameInput.value;
     profileDescription.textContent = bioInput.value;
 
     close(editPopup);
   }
   if (evt.target === addForm) {
+    const newCard =
+    {
+      name: titleInput.value,
+      link: linkInput.value
+    }
+    renderCards(newCard);
     close(addPopup);
   }
 
@@ -96,11 +106,12 @@ function render() {
 
 function renderCards(card) {
   const htmlElement = elementsTemplate.cloneNode(true);
+
   htmlElement.querySelector(".elements__description").innerText = card.name;
   htmlElement.querySelector(".elements__image").alt = card.name;
   htmlElement.querySelector(".elements__image").src = card.link;
 
-  elementsSection.appendChild(htmlElement);
+  elementsSection.prepend(htmlElement);
 }
 
 render();
@@ -112,6 +123,8 @@ closeEdit.addEventListener("click", popupClose);
 closeAdd.addEventListener("click", popupClose);
 
 edtForm.addEventListener("submit", handleFormSubmit);
+addForm.addEventListener("submit", handleFormSubmit);
+
 
 
 

@@ -113,7 +113,13 @@ function renderCards(card) {
 
   htmlElement.querySelector(".elements__trash").addEventListener("click", handleDelete);
 
+  htmlElement.querySelector(".elements__like").addEventListener("click", addLike);
+
   elementsSection.prepend(htmlElement);
+}
+
+function addLike(evt) {
+  evt.target.classList.toggle("elements__like_active");
 }
 
 function handleDelete(evt) {

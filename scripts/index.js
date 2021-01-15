@@ -111,7 +111,13 @@ function renderCards(card) {
   htmlElement.querySelector(".elements__image").alt = card.name;
   htmlElement.querySelector(".elements__image").src = card.link;
 
+  htmlElement.querySelector(".elements__trash").addEventListener("click", handleDelete);
+
   elementsSection.prepend(htmlElement);
+}
+
+function handleDelete(evt) {
+  evt.target.closest(".elements__element").remove();
 }
 
 render();

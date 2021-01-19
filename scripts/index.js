@@ -25,18 +25,18 @@ const cards = [
   }
 ];
 
-const editPopup = document.querySelector(".popup_edt");
+const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
 const closeEdit = editPopup.querySelector(".popup__close");
 
-const addPopup = document.querySelector(".popup_add");
+const addPopup = document.querySelector(".popup_type_add");
 const addButton = document.querySelector(".profile__button-add");
 const closeAdd = addPopup.querySelector(".popup__close");
 
 const edtForm = editPopup.querySelector(".popup__container");
 const addForm = addPopup.querySelector(".popup__container");
 
-const imagePopup = document.querySelector(".popup_image");
+const imagePopup = document.querySelector(".popup_type_image");
 const closeImage = imagePopup.querySelector(".popup__close");
 
 const nameInput = document.querySelector(".popup__input_type_name");
@@ -80,6 +80,8 @@ function popupOpen(evt) {
     open(editPopup);
   }
   if (evt.target === addButton) {
+    titleInput.value = '';
+    linkInput.value = '';
     open(addPopup);
   }
 

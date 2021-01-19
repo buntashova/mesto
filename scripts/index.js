@@ -36,6 +36,8 @@ const closeAdd = addPopup.querySelector(".popup__close");
 const edtForm = editPopup.querySelector(".popup__container");
 const addForm = addPopup.querySelector(".popup__container");
 
+const imagePopup = document.querySelector(".popup_image");
+const closeImage = imagePopup.querySelector(".popup__close");
 
 const nameInput = document.querySelector(".popup__input_type_name");
 const bioInput = document.querySelector(".popup__input_type_bio");
@@ -94,6 +96,9 @@ function popupClose(evt) {
   if (evt.target === closeAdd) {
     close(addPopup);
   }
+  if (evt.target === closeImage) {
+    close(imagePopup);
+  }
 }
 
 function close(popup) {
@@ -115,7 +120,16 @@ function renderCards(card) {
 
   htmlElement.querySelector(".elements__like").addEventListener("click", addLike);
 
+  htmlElement.querySelector(".elements__image").addEventListener("click", openImage);
+
   elementsSection.prepend(htmlElement);
+}
+
+function openImage(evt) {
+  open(imagePopup);
+  document.querySelector(".popup__image").src = evt.target.src;
+  document.querySelector(".popup__image").alt = evt.target.alt;
+  document.querySelector(".popup__caption").innerText = evt.target.alt;
 }
 
 function addLike(evt) {
@@ -133,6 +147,7 @@ addButton.addEventListener("click", popupOpen);
 
 closeEdit.addEventListener("click", popupClose);
 closeAdd.addEventListener("click", popupClose);
+closeImage.addEventListener("click", popupClose);
 
 edtForm.addEventListener("submit", handleFormSubmit);
 addForm.addEventListener("submit", handleFormSubmit);

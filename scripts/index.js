@@ -74,16 +74,24 @@ function handleFormSubmit(evt) {
 }
 
 function togglePopup(evt) {
-  if (evt.target === editButton || evt.target === closeEdit) {
+
+  if (evt.target === editButton) {
     nameInput.value = profileName.textContent;
     bioInput.value = profileDescription.textContent;
     toggle(editPopup);
   }
-  if (evt.target === addButton || evt.target === closeAdd) {
-    titleInput.value = '';
-    linkInput.value = '';
+  if (evt.target === closeEdit) {
+    toggle(editPopup);
+  }
+
+  if (evt.target === addButton) {
+    addPopup.querySelector(".popup__container").reset();
     toggle(addPopup);
   }
+  if (evt.target === closeAdd) {
+    toggle(addPopup);
+  }
+
   if (evt.target === closeImage) {
     toggle(imagePopup);
   }

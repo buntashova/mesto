@@ -59,7 +59,7 @@ function handleFormSubmit(evt) {
     profileName.textContent = nameInput.value;
     profileDescription.textContent = bioInput.value;
 
-    close(editPopup);
+    toggle(editPopup);
   }
   if (evt.target === addForm) {
     const newCard =
@@ -68,43 +68,29 @@ function handleFormSubmit(evt) {
       link: linkInput.value
     }
     renderCards(newCard);
-    close(addPopup);
+    toggle(addPopup);
   }
 
 }
 
-function popupOpen(evt) {
-  if (evt.target === editButton) {
+function togglePopup(evt) {
+  if (evt.target === editButton || evt.target === closeEdit) {
     nameInput.value = profileName.textContent;
     bioInput.value = profileDescription.textContent;
-    open(editPopup);
+    toggle(editPopup);
   }
-  if (evt.target === addButton) {
+  if (evt.target === addButton || evt.target === closeAdd) {
     titleInput.value = '';
     linkInput.value = '';
-    open(addPopup);
-  }
-
-}
-
-function open(popup) {
-  popup.classList.add("popup_opened");
-}
-
-function popupClose(evt) {
-  if (evt.target === closeEdit) {
-    close(editPopup);
-  }
-  if (evt.target === closeAdd) {
-    close(addPopup);
+    toggle(addPopup);
   }
   if (evt.target === closeImage) {
-    close(imagePopup);
+    toggle(imagePopup);
   }
 }
 
-function close(popup) {
-  popup.classList.remove("popup_opened");
+function toggle(popup) {
+  popup.classList.toggle("popup_opened");
 }
 
 function render() {
@@ -128,7 +114,7 @@ function renderCards(card) {
 }
 
 function openImage(evt) {
-  open(imagePopup);
+  toggle(imagePopup);
   document.querySelector(".popup__image").src = evt.target.src;
   document.querySelector(".popup__image").alt = evt.target.alt;
   document.querySelector(".popup__caption").innerText = evt.target.alt;
@@ -144,12 +130,12 @@ function handleDelete(evt) {
 
 render();
 
-editButton.addEventListener("click", popupOpen);
-addButton.addEventListener("click", popupOpen);
+editButton.addEventListener("click", togglePopup);
+addButton.addEventListener("click", togglePopup);
 
-closeEdit.addEventListener("click", popupClose);
-closeAdd.addEventListener("click", popupClose);
-closeImage.addEventListener("click", popupClose);
+closeEdit.addEventListener("click", togglePopup);
+closeAdd.addEventListener("click", togglePopup);
+closeImage.addEventListener("click", togglePopup);
 
 edtForm.addEventListener("submit", handleFormSubmit);
 addForm.addEventListener("submit", handleFormSubmit);

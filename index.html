@@ -12,10 +12,12 @@
 </head>
 
 <body class="page">
+
   <header class="header">
     <img class="header__logo" src="./images/logo.svg" alt="Логотип">
     <div class="header__line"></div>
   </header>
+
   <main>
     <section class="profile">
       <img class="profile__avatar" src="./images/image.jpg" alt="аватар">
@@ -23,18 +25,21 @@
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button type="button" class="profile__button-edt"></button>
         <p class="profile__description">Исследователь океана</p>
-
       </div>
       <button type="button" class="profile__button-add"></button>
     </section>
+
     <section class="elements">
+
     </section>
   </main>
+
   <footer class="footer">
     <p class="footer__text">© 2020 Mesto Russia</p>
   </footer>
+
   <div class="popup popup_type_edt">
-    <form name="popup-form" class="popup__container">
+    <form name="popup-form" class="popup__form">
       <h3 class="popup__title">Редактировать профиль</h3>
       <input type="text" name="user" placeholder="Напишите ваше имя" class="popup__input popup__input_type_name">
       <input type="text" name="bio" placeholder="Расскажите о себе" class="popup__input popup__input_type_bio">
@@ -44,7 +49,7 @@
   </div>
 
   <div class="popup popup_type_add">
-    <form name="popup-form-add" class="popup__container">
+    <form name="popup-form-add" class="popup__form">
       <h3 class="popup__title">Новое место</h3>
       <input type="text" name="title" placeholder="Название" class="popup__input popup__input_type_title">
       <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link">
@@ -59,10 +64,9 @@
       <h2 class="popup__caption"></h2>
       <button type="button" class="popup__close"></button>
     </div>
-
   </div>
 
-  <template class="elements__template">
+  <template class="elements elements-template">
     <div class="elements__element">
       <img class="elements__image" alt="#" src="#">
       <button type="button" class="elements__trash"></button>
@@ -72,6 +76,8 @@
       </div>
     </div>
   </template>
+
+  <script src="./scripts/initial-сards.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 

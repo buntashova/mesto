@@ -27,25 +27,8 @@ const elementsSection = document.querySelector(".elements");
 const image = document.querySelector(".popup__image");
 const caption = document.querySelector(".popup__caption");
 
-
-function handleFormSubmit(evt) {
-  evt.preventDefault();
-
-  if (evt.target === formEditProfile) {
-    profileName.textContent = nameInput.value;
-    profileDescription.textContent = bioInput.value;
-
-    togglePopup(editPopup);
-  }
-  if (evt.target === formAddCard) {
-    const newCard =
-    {
-      name: titleInput.value,
-      link: linkInput.value
-    }
-    renderCards(newCard);
-    togglePopup(addPopup);
-  }
+function togglePopup(popup) {
+  popup.classList.toggle("popup_opened");
 }
 
 function toggleAddCardPopup() {
@@ -66,32 +49,27 @@ function openImage(evt) {
   caption.innerText = evt.target.alt;
 }
 
-function togglePopup(popup) {
-  popup.classList.toggle("popup_opened");
-}
-
-function renderInitialCards() {
-  cards.forEach(renderCards);
-}
-
-function renderCards(card) {
+function createCard(card) {
   const htmlElement = elementsTemplate.cloneNode(true);
-  createCard(htmlElement, card);
+  const image = htmlElement.querySelector(".elements__image");
+  htmlElement.querySelector(".elements__description").innerText = card.name;
+  image.alt = card.name;
+  image.src = card.link;
+
   htmlElement.querySelector(".elements__trash").addEventListener("click", handleDelete);
   htmlElement.querySelector(".elements__like").addEventListener("click", addLike);
   htmlElement.querySelector(".elements__image").addEventListener("click", openImage);
-  addCard(htmlElement);
+
+  return htmlElement;
 }
 
-function createCard(Element, card) {
-  const Image = Element.querySelector(".elements__image");
-  Element.querySelector(".elements__description").innerText = card.name;
-  Image.alt = card.name;
-  Image.src = card.link;
-};
+function addCard(card) {
+  const newCard = createCard(card);
+  elementsSection.prepend(newCard);
+}
 
-function addCard(Element) {
-  elementsSection.prepend(Element);
+function renderInitialCards() {
+  cards.forEach(addCard);
 }
 
 function addLike(evt) {
@@ -100,6 +78,26 @@ function addLike(evt) {
 
 function handleDelete(evt) {
   evt.target.closest(".elements__element").remove();
+}
+
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+
+  if (evt.target === formEditProfile) {
+    profileName.textContent = nameInput.value;
+    profileDescription.textContent = bioInput.value;
+
+    togglePopup(editPopup);
+  }
+  if (evt.target === formAddCard) {
+    const newCard =
+    {
+      name: titleInput.value,
+      link: linkInput.value
+    }
+    addCard(newCard);
+    togglePopup(addPopup);
+  }
 }
 
 renderInitialCards();

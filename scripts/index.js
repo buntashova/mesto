@@ -87,6 +87,7 @@ function handleFormSubmit(evt) {
     profileName.textContent = nameInput.value;
     profileDescription.textContent = bioInput.value;
 
+
     togglePopup(editPopup);
   }
   if (evt.target === formAddCard) {

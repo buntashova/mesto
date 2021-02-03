@@ -53,10 +53,14 @@
   </div>
 
   <div class="popup popup_type_add">
-    <form name="popup-form-add" class="popup__form">
+    <form name="popup-form-add" class="popup__form" novalidate>
       <h3 class="popup__title">Новое место</h3>
-      <input type="text" name="title" placeholder="Название" class="popup__input popup__input_type_title">
-      <input type="text" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link">
+      <input type="text" name="title" id="title" placeholder="Название" class="popup__input popup__input_type_title"
+        required minlength="2" maxlength="30">
+      <span id="title-error" class="popup__error"></span>
+      <input type="url" name="link" id="url" placeholder="Ссылка на картинку"
+        class="popup__input popup__input_type_link" required>
+      <span id="url-error" class="popup__error"></span>
       <button type="submit" class="popup__button">Создать</button>
       <button type="button" class="popup__close"></button>
     </form>

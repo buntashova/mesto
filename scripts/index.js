@@ -31,12 +31,17 @@ const overlays = Array.from(document.querySelectorAll(".popup"));
 
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
+
+  enableValidation(formData);
+
   addEventListener("keydown", (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       popup.classList.remove("popup_opened");
     }
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   });
-
 }
 
 function overlayListener() {

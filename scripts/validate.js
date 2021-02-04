@@ -1,6 +1,14 @@
-const setEventListeners = (form, inputs, button) => {
+const formData = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
-  toggleButtonState(inputs, button, formData);
+const setEventListeners = (form, inputs, button) => {
+  toggleButtonState(inputs, button);
 
   inputs.forEach((input) => {
     input.addEventListener('input', function () {
@@ -10,19 +18,25 @@ const setEventListeners = (form, inputs, button) => {
   });
 };
 
-const setErrorMessage = (form, input, errorMessage, formData) => {
+const setErrorMessage = (form, input, errorMessage) => {
   const errorElement = form.querySelector(`#${input.id}-error`);
   input.classList.add(formData.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(formData.errorClass);
 };
 
-const resetErrorMessage = (form, input, formData) => {
+const resetErrorMessage = (form, input) => {
   const errorElement = form.querySelector(`#${input.id}-error`);
   input.classList.remove(formData.inputErrorClass);
   errorElement.classList.remove(formData.errorClass);
   errorElement.textContent = '';
 };
+
+function resetAllError(form, inputs) {
+  inputs.forEach((input) => {
+    resetErrorMessage(form, input);
+  })
+}
 
 const checkInputValidity = (form, input) => {
   if (!input.validity.valid) {
@@ -38,7 +52,7 @@ function isInvalidInput(inputs) {
   });
 }
 
-function toggleButtonState(inputs, button, formData) {
+function toggleButtonState(inputs, button) {
   if (isInvalidInput(inputs)) {
     button.classList.add(formData.inactiveButtonClass);
   }
@@ -47,17 +61,7 @@ function toggleButtonState(inputs, button, formData) {
   }
 }
 
-const formData = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
-
-function enableValidation(formData) {
+function enableValidation() {
   const formList = Array.from(document.querySelectorAll(formData.formSelector));
 
   formList.forEach((form) => {
@@ -68,10 +72,10 @@ function enableValidation(formData) {
     const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
     const button = form.querySelector(formData.submitButtonSelector);
 
+    resetAllError(form, inputs);
+
     setEventListeners(form, inputs, button);
   });
 };
-
-enableValidation(formData);
 
 

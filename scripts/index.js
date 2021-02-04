@@ -31,6 +31,12 @@ const overlays = Array.from(document.querySelectorAll(".popup"));
 
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
+  addEventListener("keydown", (event) => {
+    if (event.key === 'Escape') {
+      popup.classList.toggle("popup_opened");
+    }
+  });
+
 }
 
 function overlayListener() {

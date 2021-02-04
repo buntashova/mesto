@@ -27,8 +27,19 @@ const elementsSection = document.querySelector(".elements");
 const image = document.querySelector(".popup__image");
 const caption = document.querySelector(".popup__caption");
 
+const overlays = Array.from(document.querySelectorAll(".popup"));
+
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
+}
+
+function overlayListener() {
+  overlays.forEach((overlay) => {
+    overlay.addEventListener("click", (event) => {
+      if (event.target === event.currentTarget)
+        togglePopup(event.target);
+    })
+  })
 }
 
 function toggleAddCardPopup() {
@@ -112,6 +123,8 @@ closeImage.addEventListener("click", function () { togglePopup(imagePopup) });
 
 formEditProfile.addEventListener("submit", handleFormSubmit);
 formAddCard.addEventListener("submit", handleFormSubmit);
+
+overlayListener();
 
 
 

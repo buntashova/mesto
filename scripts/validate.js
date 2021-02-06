@@ -7,38 +7,33 @@ const formData = {
   errorClass: 'popup__error_visible'
 };
 
-const setEventListeners = (form, inputs, button) => {
-  toggleButtonState(inputs, button);
-
-  inputs.forEach((input) => {
-    input.addEventListener('input', function () {
-      checkInputValidity(form, input);
-      toggleButtonState(inputs, button, formData);
-    });
-  });
-};
-
-const setErrorMessage = (form, input, errorMessage) => {
+const setErrorMessage = (form, input, errorMessage, formData) => {
   const errorElement = form.querySelector(`#${input.id}-error`);
   input.classList.add(formData.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(formData.errorClass);
 };
 
-const resetErrorMessage = (form, input) => {
+function resetkeydownEnter(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+}
+
+const resetErrorMessage = (form, input, formData) => {
   const errorElement = form.querySelector(`#${input.id}-error`);
   input.classList.remove(formData.inputErrorClass);
   errorElement.classList.remove(formData.errorClass);
   errorElement.textContent = '';
 };
 
-function resetAllError(form, inputs) {
+function resetAllError(form, inputs, formData) {
   inputs.forEach((input) => {
-    resetErrorMessage(form, input);
+    resetErrorMessage(form, input, formData);
   })
 }
 
-const checkInputValidity = (form, input) => {
+const checkInputValidity = (form, input, formData) => {
   if (!input.validity.valid) {
     setErrorMessage(form, input, input.validationMessage, formData);
   } else {
@@ -46,13 +41,19 @@ const checkInputValidity = (form, input) => {
   }
 };
 
+const checkFormValidity = (form, inputs, formData) => {
+  inputs.forEach((input) => {
+    checkInputValidity(form, input, formData);
+  })
+}
+
 function isInvalidInput(inputs) {
   return inputs.some((input) => {
     return !input.validity.valid;
   });
 }
 
-function toggleButtonState(inputs, button) {
+function toggleButtonState(inputs, button, formData) {
   if (isInvalidInput(inputs)) {
     button.classList.add(formData.inactiveButtonClass);
   }
@@ -61,7 +62,21 @@ function toggleButtonState(inputs, button) {
   }
 }
 
-function enableValidation() {
+const setEventListeners = (form, inputs, button, formData) => {
+  inputs.forEach((input) => {
+    input.addEventListener('input', function () {
+      checkInputValidity(form, input, formData);
+      toggleButtonState(inputs, button, formData);
+    });
+    input.addEventListener('keydown', function (event) {
+      if (isInvalidInput(inputs)) {
+        resetkeydownEnter(event)
+      }
+    });
+  });
+};
+
+function enableValidation(formData) {
   const formList = Array.from(document.querySelectorAll(formData.formSelector));
 
   formList.forEach((form) => {
@@ -72,10 +87,9 @@ function enableValidation() {
     const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
     const button = form.querySelector(formData.submitButtonSelector);
 
-    resetAllError(form, inputs);
+    setEventListeners(form, inputs, button, formData);
 
-    setEventListeners(form, inputs, button);
   });
 };
 
-
+enableValidation(formData);

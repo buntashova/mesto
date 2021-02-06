@@ -27,48 +27,63 @@ const elementsSection = document.querySelector(".elements");
 const image = document.querySelector(".popup__image");
 const caption = document.querySelector(".popup__caption");
 
-const overlays = Array.from(document.querySelectorAll(".popup"));
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
 
-function togglePopup(popup) {
-  popup.classList.toggle("popup_opened");
+  const form = popup.querySelector(".popup__form");
+  const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
+  const button = form.querySelector(formData.submitButtonSelector);
 
-  enableValidation(formData);
+  toggleButtonState(inputs, button, formData);
 
-  addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      popup.classList.remove("popup_opened");
-    }
-    if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  });
+  checkFormValidity(form, inputs, formData);
+
+  resetAllError(form, inputs, formData);
+
+  document.addEventListener("keydown", closeByEscape);
+}
+
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+
+  document.removeEventListener("keydown", closeByEscape);
+}
+
+function closeByEscape(event) {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
 }
 
 function overlayListener() {
-  overlays.forEach((overlay) => {
-    overlay.addEventListener("click", (event) => {
-      if (event.target === event.currentTarget)
-        togglePopup(event.target);
-    })
-  })
+  const popups = document.querySelectorAll(".popup");
+
+  popups.forEach((popup) => {
+    popup.addEventListener("click", (event) => {
+      if (event.target.classList.contains("popup_opened")) {
+        closePopup(popup)
+      }
+    });
+  });
 }
 
-function toggleAddCardPopup() {
+function openAddCardPopup() {
   formAddCard.reset();
-  togglePopup(addPopup);
+  openPopup(addPopup);
 }
 
-function toggleEditProfilePopup() {
+function openEditProfilePopup() {
   nameInput.value = profileName.textContent;
   bioInput.value = profileDescription.textContent;
-  togglePopup(editPopup);
+  openPopup(editPopup);
 }
 
-function openImage(evt) {
-  togglePopup(imagePopup);
-  image.src = evt.target.src;
-  image.alt = evt.target.alt;
-  caption.innerText = evt.target.alt;
+function openImage(card) {
+  openPopup(imagePopup);
+  image.src = card.link;
+  image.alt = card.name;
+  caption.innerText = card.name;
 }
 
 function createCard(card) {
@@ -81,6 +96,7 @@ function createCard(card) {
   htmlElement.querySelector(".elements__trash").addEventListener("click", handleDelete);
   htmlElement.querySelector(".elements__like").addEventListener("click", addLike);
   htmlElement.querySelector(".elements__image").addEventListener("click", openImage);
+  htmlElement.querySelector(".elements__image").addEventListener("click", () => { openImage(card) });
 
   return htmlElement;
 }
@@ -110,7 +126,7 @@ function handleFormSubmit(evt) {
     profileDescription.textContent = bioInput.value;
 
 
-    togglePopup(editPopup);
+    closePopup(editPopup);
   }
   if (evt.target === formAddCard) {
     const newCard =
@@ -119,18 +135,18 @@ function handleFormSubmit(evt) {
       link: linkInput.value
     }
     addCard(newCard);
-    togglePopup(addPopup);
+    closePopup(addPopup);
   }
 }
 
 renderInitialCards();
 
-editButton.addEventListener("click", toggleEditProfilePopup);
-addButton.addEventListener("click", toggleAddCardPopup);
+editButton.addEventListener("click", openEditProfilePopup);
+addButton.addEventListener("click", openAddCardPopup);
 
-closeEdit.addEventListener("click", function () { togglePopup(editPopup) });
-closeAdd.addEventListener("click", function () { togglePopup(addPopup) });
-closeImage.addEventListener("click", function () { togglePopup(imagePopup) });
+closeEdit.addEventListener("click", () => { closePopup(editPopup) });
+closeAdd.addEventListener("click", () => { closePopup(addPopup) });
+closeImage.addEventListener("click", () => { closePopup(imagePopup) });
 
 formEditProfile.addEventListener("submit", handleFormSubmit);
 formAddCard.addEventListener("submit", handleFormSubmit);

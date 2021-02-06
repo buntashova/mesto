@@ -30,16 +30,6 @@ const caption = document.querySelector(".popup__caption");
 function openPopup(popup) {
   popup.classList.add("popup_opened");
 
-  const form = popup.querySelector(".popup__form");
-  const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
-  const button = form.querySelector(formData.submitButtonSelector);
-
-  toggleButtonState(inputs, button, formData);
-
-  checkFormValidity(form, inputs, formData);
-
-  resetAllError(form, inputs, formData);
-
   document.addEventListener("keydown", closeByEscape);
 }
 
@@ -68,12 +58,28 @@ function overlayListener() {
   });
 }
 
+function handleForm(popup) {
+  const form = popup.querySelector(".popup__form");
+  const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
+  const button = form.querySelector(formData.submitButtonSelector);
+
+  toggleButtonState(inputs, button, formData);
+
+  checkFormValidity(form, inputs, formData);
+
+  resetAllError(form, inputs, formData);
+}
+
 function openAddCardPopup() {
+  handleForm(addPopup);
+
   formAddCard.reset();
   openPopup(addPopup);
 }
 
 function openEditProfilePopup() {
+  handleForm(editPopup);
+
   nameInput.value = profileName.textContent;
   bioInput.value = profileDescription.textContent;
   openPopup(editPopup);

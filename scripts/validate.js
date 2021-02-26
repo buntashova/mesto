@@ -7,89 +7,98 @@ const formData = {
   errorClass: 'popup__error_visible'
 };
 
-const setErrorMessage = (form, input, errorMessage, formData) => {
-  const errorElement = form.querySelector(`#${input.id}-error`);
-  input.classList.add(formData.inputErrorClass);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(formData.errorClass);
-};
+class FormValidator {
+  constructor(formData, form) {
+    this._formSelector = formData.formSelector;
+    this._inputSelector = formData.inputSelector;
+    this._submitButtonSelector = formData.submitButtonSelector;
+    this._inactiveButtonClass = formData.inactiveButtonClass;
+    this._inputErrorClass = formData.inputErrorClass;
+    this._errorClass = formData.errorClass;
 
-function resetkeydownEnter(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
+    this._form = form;
   }
-}
 
-const resetErrorMessage = (form, input, formData) => {
-  const errorElement = form.querySelector(`#${input.id}-error`);
-  input.classList.remove(formData.inputErrorClass);
-  errorElement.classList.remove(formData.errorClass);
-  errorElement.textContent = '';
-};
-
-function resetAllError(form, inputs, formData) {
-  inputs.forEach((input) => {
-    resetErrorMessage(form, input, formData);
-  })
-}
-
-const checkInputValidity = (form, input, formData) => {
-  if (!input.validity.valid) {
-    setErrorMessage(form, input, input.validationMessage, formData);
-  } else {
-    resetErrorMessage(form, input, formData);
-  }
-};
-
-const checkFormValidity = (form, inputs, formData) => {
-  inputs.forEach((input) => {
-    checkInputValidity(form, input, formData);
-  })
-}
-
-function isInvalidInput(inputs) {
-  return inputs.some((input) => {
-    return !input.validity.valid;
-  });
-}
-
-function toggleButtonState(inputs, button, formData) {
-  if (isInvalidInput(inputs)) {
-    button.classList.add(formData.inactiveButtonClass);
-  }
-  else {
-    button.classList.remove(formData.inactiveButtonClass);
-  }
-}
-
-const setEventListeners = (form, inputs, button, formData) => {
-  inputs.forEach((input) => {
-    input.addEventListener('input', function () {
-      checkInputValidity(form, input, formData);
-      toggleButtonState(inputs, button, formData);
-    });
-    input.addEventListener('keydown', function (event) {
-      if (isInvalidInput(inputs)) {
-        resetkeydownEnter(event)
-      }
-    });
-  });
-};
-
-function enableValidation(formData) {
-  const formList = Array.from(document.querySelectorAll(formData.formSelector));
-
-  formList.forEach((form) => {
-    form.addEventListener('submit', function (evt) {
-      evt.preventDefault();
+  enableValidation() {
+    this._form.addEventListener("sunmit", function (event) {
+      event.preventDefault();
     });
 
-    const inputs = Array.from(form.querySelectorAll(formData.inputSelector));
-    const button = form.querySelector(formData.submitButtonSelector);
+    this._inputs = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._button = this._form.querySelector(this._submitButtonSelector);
 
-    setEventListeners(form, inputs, button, formData);
+    this._setEventListeners();
+  }
 
-  });
-};
+  resetAllError() {
+    this._inputs.forEach((input) => {
+      this._resetErrorMessage(input);
+    })
+  }
 
-enableValidation(formData);
+  toggleButtonState() {
+    if (this._isInvalidInput(this._inputs)) {
+      this._button.classList.add(this._inactiveButtonClass);
+    }
+    else {
+      this._button.classList.remove(this._inactiveButtonClass);
+    }
+  }
+
+  _setEventListeners() {
+    this._inputs.forEach((input) => {
+      input.addEventListener('input', () => {
+        this._checkInputValidity(input);
+        this.toggleButtonState();
+      });
+      input.addEventListener('keydown', (event) => {
+        if (this._isInvalidInput(this._inputs)) {
+          this._resetkeydownEnter(event)
+        }
+      });
+    });
+  }
+
+  _checkInputValidity(input) {
+    if (!input.validity.valid) {
+      this._setErrorMessage(input, input.validationMessage);
+    } else {
+      this._resetErrorMessage(input);
+    }
+  }
+
+  _setErrorMessage(input, errorMessage) {
+    this._errorElement = this._form.querySelector(`#${input.id}-error`);
+    input.classList.add(this._inputErrorClass);
+    this._errorElement.textContent = errorMessage;
+    this._errorElement.classList.add(this._errorClass);
+  };
+
+  _resetErrorMessage(input) {
+    this._errorElement = this._form.querySelector(`#${input.id}-error`);
+    input.classList.remove(this._inputErrorClass);
+    this._errorElement.classList.remove(this._errorClass);
+    this._errorElement.textContent = '';
+  };
+
+  _isInvalidInput() {
+    return this._inputs.some((input) => {
+      return !input.validity.valid;
+    });
+  }
+
+  _resetkeydownEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
+}
+
+const validAddForm = new FormValidator(formData, formAddCard);
+validAddForm.enableValidation();
+
+const validEditForm = new FormValidator(formData, formEditProfile);
+validEditForm.enableValidation();
+
+

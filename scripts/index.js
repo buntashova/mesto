@@ -1,3 +1,7 @@
+import { FormValidator } from "./validate.js";
+import { Card } from "./card.js";
+import { cards, formData } from "./constants.js"
+
 const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
 const closeEdit = editPopup.querySelector(".popup__close");
@@ -64,11 +68,11 @@ function openAddCardPopup() {
   validAddForm.resetAllError();
 
   openPopup(addPopup);
-
-
 }
 
 function openEditProfilePopup() {
+  formEditProfile.reset();
+
   validEditForm.toggleButtonState();
   validEditForm.resetAllError();
 
@@ -82,76 +86,6 @@ function openImage(link, name) {
   image.src = link;
   image.alt = name;
   caption.innerText = name;
-}
-
-// function createCard(card) {
-//   const htmlElement = elementsTemplate.cloneNode(true);
-//   const image = htmlElement.querySelector(".elements__image");
-//   htmlElement.querySelector(".elements__description").innerText = card.name;
-//   image.alt = card.name;
-//   image.src = card.link;
-
-//   htmlElement.querySelector(".elements__trash").addEventListener("click", handleDelete);
-//   htmlElement.querySelector(".elements__like").addEventListener("click", addLike);
-//   htmlElement.querySelector(".elements__image").addEventListener("click", openImage);
-//   htmlElement.querySelector(".elements__image").addEventListener("click", () => { openImage(card) });
-
-//   return htmlElement;
-// }
-
-class Card {
-  constructor(card, cardTemplate) {
-    this._name = card.name;
-    this._link = card.link;
-    this._template = cardTemplate;
-  }
-
-  _getTemplate() {
-    const elementsTemplate = document
-      .querySelector(this._template)
-      .content
-      .cloneNode(true);
-
-    return elementsTemplate;
-  }
-
-  fillCard() {
-    this._element = this._getTemplate();
-    this._setEventListeners();
-    this._image = this._element.querySelector(".elements__image");
-
-    this._element.querySelector(".elements__description").innerText = this._name;
-    this._image.alt = this._name;
-    this._image.src = this._link;
-
-    return this._element;
-  }
-
-  _handleDelete(evt) {
-    evt.target.closest(".elements__element").remove();
-  }
-
-  _handleLike(evt) {
-    evt.target.classList.toggle("elements__like_active");
-  }
-
-  _openImage() {
-    openImage(this._link, this._name,);
-  }
-
-  _setEventListeners() {
-    this._element.querySelector(".elements__trash").addEventListener("click", (evt) => {
-      this._handleDelete(evt);
-    });
-
-    this._element.querySelector(".elements__like").addEventListener("click", (evt) => {
-      this._handleLike(evt);
-    });
-
-    this._element.querySelector(".elements__image").addEventListener("click", () => {
-      this._openImage();
-    });
-  }
 }
 
 function addCard(card) {
@@ -200,6 +134,10 @@ formAddCard.addEventListener("submit", handleFormSubmit);
 
 overlayListener();
 
+const validAddForm = new FormValidator(formData, formAddCard);
+validAddForm.enableValidation();
 
+const validEditForm = new FormValidator(formData, formEditProfile);
+validEditForm.enableValidation();
 
-
+export { openImage };

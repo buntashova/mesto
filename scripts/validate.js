@@ -1,12 +1,3 @@
-const formData = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
 class FormValidator {
   constructor(formData, form) {
     this._formSelector = formData.formSelector;
@@ -95,10 +86,5 @@ class FormValidator {
 
 }
 
-const validAddForm = new FormValidator(formData, formAddCard);
-validAddForm.enableValidation();
-
-const validEditForm = new FormValidator(formData, formEditProfile);
-validEditForm.enableValidation();
-
+export { FormValidator };
 

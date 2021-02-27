@@ -1,4 +1,4 @@
-import { openImage } from "./index.js";
+import { openImage } from "./utils.js";
 
 class Card {
   constructor(card, cardTemplate) {
@@ -9,8 +9,9 @@ class Card {
 
   fillCard() {
     this._element = this._getTemplate();
-    this._setEventListeners();
     this._image = this._element.querySelector(".elements__image");
+
+    this._setEventListeners();
 
     this._element.querySelector(".elements__description").innerText = this._name;
     this._image.alt = this._name;
@@ -49,7 +50,7 @@ class Card {
       this._handleLike(evt);
     });
 
-    this._element.querySelector(".elements__image").addEventListener("click", () => {
+    this._image.addEventListener("click", () => {
       this._openImage();
     });
   }

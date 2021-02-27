@@ -11,7 +11,7 @@ class FormValidator {
   }
 
   enableValidation() {
-    this._form.addEventListener("sunmit", function (event) {
+    this._form.addEventListener("submit", function (event) {
       event.preventDefault();
     });
 

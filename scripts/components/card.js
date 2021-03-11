@@ -1,4 +1,4 @@
-import { openImage } from "./utils.js";
+import { openImage } from "../utils/utils.js";
 
 class Card {
   constructor(card, cardTemplate) {

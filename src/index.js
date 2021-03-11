@@ -1,7 +1,10 @@
-import { FormValidator } from "./validate.js";
-import { Card } from "./card.js";
-import { cards, formData } from "./constants.js";
-import { imagePopup, closePopup, openPopup } from "./utils.js"
+import "../src/index.css";
+
+import { FormValidator } from "../scripts/components/validate.js";
+import { Card } from "../scripts/components/card.js";
+import { Section } from "../scripts/components/section.js"
+import { cards, formData } from "../scripts/utils/constants.js";
+import { imagePopup, closePopup, openPopup } from "../scripts/utils/utils.js"
 
 const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
@@ -25,7 +28,7 @@ const linkInput = document.querySelector(".popup__input_type_link");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
-const elementsSection = document.querySelector(".elements");
+const cardListSelector = ".elements";
 
 const template = ".elements-template";
 
@@ -61,17 +64,21 @@ function openEditProfilePopup() {
   openPopup(editPopup);
 }
 
-function addCard(card) {
-  const item = new Card(card, template);
-  const newCard = item.fillCard();
-  elementsSection.prepend(newCard);
+function addCard(item) {
+  const card = new Card(item, template);
+  const cardElement = card.fillCard();
+  cardList.setItem(cardElement);
 }
 
-function renderInitialCards() {
-  cards.forEach(card => {
-    addCard(card);
-  });
-}
+
+const cardList = new Section({
+  items: cards,
+  renderer: (item) => {
+    addCard(item);
+  }
+},
+  cardListSelector
+);
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
@@ -93,7 +100,7 @@ function handleFormSubmit(evt) {
   }
 }
 
-renderInitialCards();
+cardList.renderItems();
 
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);

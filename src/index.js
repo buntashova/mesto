@@ -4,20 +4,20 @@ import { FormValidator } from "../scripts/components/validate.js";
 import { Card } from "../scripts/components/card.js";
 import { Section } from "../scripts/components/section.js"
 import { cards, formData } from "../scripts/utils/constants.js";
-import { imagePopup, closePopup, openPopup } from "../scripts/utils/utils.js"
+import { Popup } from "../scripts/components/popup.js";
+import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 
 const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
-const closeEdit = editPopup.querySelector(".popup__close");
 
 const addPopup = document.querySelector(".popup_type_add");
 const addButton = document.querySelector(".profile__button-add");
-const closeAdd = addPopup.querySelector(".popup__close");
+
+
+const imagePopup = document.querySelector(".popup_type_image");
 
 const formEditProfile = editPopup.querySelector(".popup__form");
 const formAddCard = addPopup.querySelector(".popup__form");
-
-const closeImage = imagePopup.querySelector(".popup__close");
 
 const nameInput = document.querySelector(".popup__input_type_name");
 const bioInput = document.querySelector(".popup__input_type_bio");
@@ -31,18 +31,6 @@ const profileDescription = document.querySelector(".profile__description");
 const cardListSelector = ".elements";
 
 const template = ".elements-template";
-
-function setCloseByOverlayClickListeners() {
-  const popups = document.querySelectorAll(".popup");
-
-  popups.forEach((popup) => {
-    popup.addEventListener("click", (event) => {
-      if (event.target.classList.contains("popup_opened")) {
-        closePopup(popup)
-      }
-    });
-  });
-}
 
 function openAddCardPopup() {
   formAddCard.reset();
@@ -65,7 +53,10 @@ function openEditProfilePopup() {
 }
 
 function addCard(item) {
-  const card = new Card(item, template);
+  const card = new Card(item, template, handleCardClick => {
+    const imageClick = new PopupWithImage(imagePopup);
+    imageClick.open(item.link, item.name);
+  });
   const cardElement = card.fillCard();
   cardList.setItem(cardElement);
 }
@@ -105,14 +96,8 @@ cardList.renderItems();
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);
 
-closeEdit.addEventListener("click", () => { closePopup(editPopup) });
-closeAdd.addEventListener("click", () => { closePopup(addPopup) });
-closeImage.addEventListener("click", () => { closePopup(imagePopup) });
-
 formEditProfile.addEventListener("submit", handleFormSubmit);
 formAddCard.addEventListener("submit", handleFormSubmit);
-
-setCloseByOverlayClickListeners();
 
 const validAddForm = new FormValidator(formData, formAddCard);
 validAddForm.enableValidation();

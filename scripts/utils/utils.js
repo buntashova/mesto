@@ -1,32 +1,32 @@
-const imagePopup = document.querySelector(".popup_type_image");
 
-const image = document.querySelector(".popup__image");
-const caption = document.querySelector(".popup__caption");
 
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
+// const image = document.querySelector(".popup__image");
+// const caption = document.querySelector(".popup__caption");
 
-  document.removeEventListener("keydown", closeByEscape);
-}
+// // function closePopup(popup) {
+// //   popup.classList.remove("popup_opened");
 
-function closeByEscape(event) {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-}
+// //   document.removeEventListener("keydown", closeByEscape);
+// // }
 
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
+// // function closeByEscape(event) {
+// //   if (event.key === "Escape") {
+// //     const openedPopup = document.querySelector(".popup_opened");
+// //     closePopup(openedPopup);
+// //   }
+// // }
 
-  document.addEventListener("keydown", closeByEscape);
-}
+// // function openPopup(popup) {
+// //   popup.classList.add("popup_opened");
 
-function openImage(link, name) {
-  openPopup(imagePopup);
-  image.src = link;
-  image.alt = name;
-  caption.innerText = name;
-}
+// //   document.addEventListener("keydown", closeByEscape);
+// // }
 
-export { openImage, imagePopup, closePopup, openPopup }
+// function openImage(link, name) {
+//   openPopup(imagePopup);
+//   image.src = link;
+//   image.alt = name;
+//   caption.innerText = name;
+// }
+
+// export { openImage, imagePopup, closePopup, openPopup }

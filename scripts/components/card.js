@@ -1,10 +1,10 @@
-import { openImage } from "../utils/utils.js";
 
 class Card {
-  constructor(card, cardTemplate) {
+  constructor(card, cardTemplate, handleCardClick) {
     this._name = card.name;
     this._link = card.link;
     this._template = cardTemplate;
+    this._handleCardClick = handleCardClick;
   }
 
   fillCard() {
@@ -37,9 +37,9 @@ class Card {
     evt.target.classList.toggle("elements__like_active");
   }
 
-  _openImage() {
-    openImage(this._link, this._name,);
-  }
+  // _openImage() {
+  //   openImage(this._link, this._name,);
+  // }
 
   _setEventListeners() {
     this._element.querySelector(".elements__trash").addEventListener("click", (evt) => {
@@ -51,7 +51,7 @@ class Card {
     });
 
     this._image.addEventListener("click", () => {
-      this._openImage();
+      this._handleCardClick();
     });
   }
 }

@@ -6,6 +6,8 @@ import { Section } from "../scripts/components/section.js"
 import { cards, formData } from "../scripts/utils/constants.js";
 import { Popup } from "../scripts/components/popup.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
+import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
+
 
 const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
@@ -33,23 +35,44 @@ const cardListSelector = ".elements";
 const template = ".elements-template";
 
 function openAddCardPopup() {
-  formAddCard.reset();
+  //formAddCard.reset();
 
   validAddForm.toggleButtonState();
   validAddForm.resetAllError();
 
-  openPopup(addPopup);
+  const popupAdd = new PopupWithForm({
+    popupSelector: addPopup,
+    handleFormSubmit: (formData) => {
+      const newCard =
+      {
+        name: formData.title,
+        link: formData.link
+      }
+      addCard(newCard);
+      popupAdd.close();
+    }
+  })
+  popupAdd.setEventListeners();
+  popupAdd.open();
 }
 
 function openEditProfilePopup() {
-  formEditProfile.reset();
+  //formEditProfile.reset();
 
   validEditForm.toggleButtonState();
   validEditForm.resetAllError();
 
   nameInput.value = profileName.textContent;
   bioInput.value = profileDescription.textContent;
-  openPopup(editPopup);
+
+  const popupEdt = new PopupWithForm({
+    popupSelector: editPopup,
+    handleFormSubmit: (formData) => {
+
+    }
+  })
+  popupEdt.setEventListeners();
+  popupEdt.open();
 }
 
 function addCard(item) {
@@ -71,33 +94,32 @@ const cardList = new Section({
   cardListSelector
 );
 
-function handleFormSubmit(evt) {
-  evt.preventDefault();
+// function handleFormSubmit(evt) {
+//   evt.preventDefault();
 
-  if (evt.target === formEditProfile) {
-    profileName.textContent = nameInput.value;
-    profileDescription.textContent = bioInput.value;
+//   if (evt.target === formEditProfile) {
+//     profileName.textContent = nameInput.value;
+//     profileDescription.textContent = bioInput.value;
 
-    closePopup(editPopup);
-  }
-  if (evt.target === formAddCard) {
-    const newCard =
-    {
-      name: titleInput.value,
-      link: linkInput.value
-    }
-    addCard(newCard);
-    closePopup(addPopup);
-  }
-}
+//     closePopup(editPopup);
+//   }
+//   if (evt.target === formAddCard) {
+//     const newCard =
+//     {
+//       name: titleInput.value,
+//       link: linkInput.value
+//     }
+//     addCard(newCard);
+//     closePopup(addPopup);
+//   }
+// }
 
 cardList.renderItems();
 
+
+
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);
-
-formEditProfile.addEventListener("submit", handleFormSubmit);
-formAddCard.addEventListener("submit", handleFormSubmit);
 
 const validAddForm = new FormValidator(formData, formAddCard);
 validAddForm.enableValidation();

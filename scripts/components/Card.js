@@ -37,10 +37,6 @@ class Card {
     evt.target.classList.toggle("elements__like_active");
   }
 
-  // _openImage() {
-  //   openImage(this._link, this._name,);
-  // }
-
   _setEventListeners() {
     this._element.querySelector(".elements__trash").addEventListener("click", (evt) => {
       this._handleDelete(evt);

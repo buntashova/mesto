@@ -1,4 +1,4 @@
-import "../pages/index.css";
+import "./index.css";
 
 import { FormValidator } from "../scripts/validate.js";
 import { Card } from "../scripts/components/Card.js";
@@ -54,6 +54,8 @@ const popupEdt = new PopupWithForm({
   }
 })
 
+const imageClick = new PopupWithImage(imagePopup);
+
 function openAddCardPopup() {
   validAddForm.toggleButtonState();
   validAddForm.resetAllError();
@@ -74,7 +76,6 @@ function openEditProfilePopup() {
 
 function addCard(item) {
   const card = new Card(item, template, handleCardClick => {
-    const imageClick = new PopupWithImage(imagePopup);
     imageClick.open(item.link, item.name);
   });
   const cardElement = card.fillCard();
@@ -97,6 +98,8 @@ addButton.addEventListener("click", openAddCardPopup);
 
 popupAdd.setEventListeners();
 popupEdt.setEventListeners();
+
+imageClick.setEventListeners();
 
 const validAddForm = new FormValidator(formData, formAddCard);
 validAddForm.enableValidation();

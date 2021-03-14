@@ -6,9 +6,7 @@ class PopupWithImage extends Popup {
 
     document.querySelector(".popup__image").src = link;
     document.querySelector(".popup__image").alt = name;
-    document.querySelector(".popup__caption").innerText = name;
-
-    super.setEventListeners();
+    document.querySelector(".popup__caption").innerText = name
 
   }
 }

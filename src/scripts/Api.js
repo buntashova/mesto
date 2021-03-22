@@ -19,4 +19,19 @@ export class Api {
       });
   }
 
+  getInfoUser() {
+    return fetch("https://mesto.nomoreparties.co/v1/cohort-21/users/me", {
+      headers: this.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
 }

@@ -26,6 +26,10 @@ const formAddCard = addPopup.querySelector(".popup__form");
 const nameInput = document.querySelector(".popup__input_type_name");
 const bioInput = document.querySelector(".popup__input_type_bio");
 
+const name = document.querySelector(".profile__name");
+const about = document.querySelector(".profile__description");
+const avatar = document.querySelector(".profile__avatar");
+
 const profileName = ".profile__name";
 const profileDescription = ".profile__description";
 
@@ -38,6 +42,27 @@ const userInfo = new UserInfo(profileName, profileDescription);
 const api = new Api(options);
 
 api.getInitialCards()
+  .then(data => {
+    const cardList = new Section({
+      items: data,
+      renderer: (item) => {
+        addCard(cardList, item);
+      }
+    },
+      cardListSelector
+    );
+    cardList.renderItems();
+  })
+
+api.getInfoUser()
+  .then(data => {
+    name.textContent = data.name;
+    about.textContent = data.about;
+    avatar.src = data.avatar;
+    console.log(name.value)
+  })
+
+
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
@@ -81,19 +106,6 @@ function openEditProfilePopup() {
 }
 
 
-
-api.getInitialCards()
-  .then(data => {
-    const cardList = new Section({
-      items: data,
-      renderer: (item) => {
-        addCard(cardList, item);
-      }
-    },
-      cardListSelector
-    );
-    cardList.renderItems();
-  })
 
 // const cardList = new Section({
 //   items: cards,

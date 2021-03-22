@@ -1,29 +1,10 @@
-const cards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+const options = {
+  url: "https://mesto.nomoreparties.co/v1/cohort-21",
+  headers: {
+    'Content-Type': 'application/json',
+    authorization: "035fd2fc-5c2b-4a58-b480-c0c8f099ca99"
   }
-];
+}
 
 const formData = {
   formSelector: '.popup__form',
@@ -35,4 +16,4 @@ const formData = {
 };
 
 
-export { cards, formData };
+export { options, formData };

@@ -3,11 +3,13 @@ import "./index.css";
 import { FormValidator } from "../scripts/validate.js";
 import { Card } from "../scripts/components/Card.js";
 import { Section } from "../scripts/components/Section.js"
-import { cards, formData } from "../scripts/utils/constants.js";
+import { options, formData } from "../scripts/utils/constants.js";
 import { Popup } from "../scripts/components/Popup.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
+
+import { Api } from "../scripts/Api.js";
 
 
 const editPopup = document.querySelector(".popup_type_edt");
@@ -32,6 +34,10 @@ const cardListSelector = ".elements";
 const template = ".elements-template";
 
 const userInfo = new UserInfo(profileName, profileDescription);
+
+const api = new Api(options);
+
+api.getInitialCards()
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
@@ -74,24 +80,37 @@ function openEditProfilePopup() {
   popupEdt.open();
 }
 
-function addCard(item) {
+
+
+api.getInitialCards()
+  .then(data => {
+    const cardList = new Section({
+      items: data,
+      renderer: (item) => {
+        addCard(cardList, item);
+      }
+    },
+      cardListSelector
+    );
+    cardList.renderItems();
+  })
+
+// const cardList = new Section({
+//   items: cards,
+//   renderer: (item) => {
+//     addCard(item);
+//   }
+// },
+//   cardListSelector
+// );
+
+function addCard(cardList, item) {
   const card = new Card(item, template, handleCardClick => {
     imageClick.open(item.link, item.name);
   });
   const cardElement = card.fillCard();
   cardList.setItem(cardElement);
 }
-
-const cardList = new Section({
-  items: cards,
-  renderer: (item) => {
-    addCard(item);
-  }
-},
-  cardListSelector
-);
-
-cardList.renderItems();
 
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);

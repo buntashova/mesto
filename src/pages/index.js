@@ -59,10 +59,7 @@ api.getInfoUser()
     name.textContent = data.name;
     about.textContent = data.about;
     avatar.src = data.avatar;
-    console.log(name.value)
   })
-
-
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
@@ -81,6 +78,7 @@ const popupEdt = new PopupWithForm({
   popupSelector: editPopup,
   handleFormSubmit: (formData) => {
     userInfo.setUserInfo(formData.user, formData.bio);
+    api.editInfoUser(formData.user, formData.bio)
     popupEdt.close();
   }
 })

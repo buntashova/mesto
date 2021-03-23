@@ -34,4 +34,25 @@ export class Api {
       });
   }
 
+  editInfoUser(newName, newBio) {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-21/users/me', {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: newName,
+        about: newBio
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }
+
 }

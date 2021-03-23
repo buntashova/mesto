@@ -17,6 +17,7 @@ class UserInfo {
     this._name.textContent = newName;
     this._bio.textContent = newBio;
   }
+
 }
 
 export { UserInfo }

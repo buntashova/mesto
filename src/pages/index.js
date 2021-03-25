@@ -26,9 +26,7 @@ const formAddCard = addPopup.querySelector(".popup__form");
 const nameInput = document.querySelector(".popup__input_type_name");
 const bioInput = document.querySelector(".popup__input_type_bio");
 
-const name = document.querySelector(".profile__name");
-const about = document.querySelector(".profile__description");
-const avatar = document.querySelector(".profile__avatar");
+const avatar = ".profile__avatar";
 
 const profileName = ".profile__name";
 const profileDescription = ".profile__description";
@@ -37,7 +35,6 @@ const cardListSelector = ".elements";
 
 const template = ".elements-template";
 
-const userInfo = new UserInfo(profileName, profileDescription);
 
 const api = new Api(options);
 
@@ -54,12 +51,9 @@ api.getInitialCards()
     cardList.renderItems();
   })
 
-api.getInfoUser()
-  .then(data => {
-    name.textContent = data.name;
-    about.textContent = data.about;
-    avatar.src = data.avatar;
-  })
+
+const userInfo = new UserInfo(profileName, profileDescription, avatar, api);
+userInfo.getUserInfo();
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
@@ -69,7 +63,11 @@ const popupAdd = new PopupWithForm({
       name: formData.title,
       link: formData.link
     }
-    addCard(newCard);
+    api.addNewCard(newCard)
+
+    addCard(cardList, newCard)
+
+    //addCard(newCard);
     popupAdd.close();
   }
 })
@@ -78,7 +76,6 @@ const popupEdt = new PopupWithForm({
   popupSelector: editPopup,
   handleFormSubmit: (formData) => {
     userInfo.setUserInfo(formData.user, formData.bio);
-    api.editInfoUser(formData.user, formData.bio)
     popupEdt.close();
   }
 })

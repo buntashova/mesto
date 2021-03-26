@@ -75,4 +75,14 @@ export class Api {
 
   }
 
+  updateUserAvatar(newAvatar) {
+    fetch("https://mesto.nomoreparties.co/v1/cohortId/users/me/avatar", {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        avatar: newAvatar
+      })
+    })
+  }
+
 }

@@ -11,6 +11,7 @@ import { UserInfo } from "../scripts/components/UserInfo.js";
 
 import { Api } from "../scripts/Api.js";
 
+const avatarPopup = document.querySelector(".popup_type_avatar");
 
 const editPopup = document.querySelector(".popup_type_edt");
 const editButton = document.querySelector(".profile__button-edt");
@@ -89,6 +90,17 @@ function openAddCardPopup() {
   popupAdd.open();
 }
 
+const popupAvatar = new PopupWithForm({
+  popupSelector: avatarPopup,
+  handleFormSubmit: (formData) => {
+    popupAvatar.close();
+  }
+})
+
+function openAvatarPopup() {
+  popupAvatar.open();
+}
+
 function openEditProfilePopup() {
   validEditForm.toggleButtonState();
   validEditForm.resetAllError();
@@ -121,9 +133,11 @@ function addCard(cardList, item) {
 
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);
+document.querySelector(avatar).addEventListener("click", openAvatarPopup)
 
 popupAdd.setEventListeners();
 popupEdt.setEventListeners();
+popupAvatar.setEventListeners();
 
 imageClick.setEventListeners();
 

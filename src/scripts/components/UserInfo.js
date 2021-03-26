@@ -11,12 +11,15 @@ class UserInfo {
       .then(data => {
         this._name.textContent = data.name;
         this._bio.textContent = data.about;
-        this._avatar.src = data.avatar
+        this._avatar.src = data.avatar;
+        this._id = data._id
       })
 
     const info = {
       name: this._name.textContent,
-      bio: this._bio.textContent
+      bio: this._bio.textContent,
+      id: this._id,
+      avatar: this._avatar.src
     }
     return info
   }
@@ -26,6 +29,10 @@ class UserInfo {
 
     this._name.textContent = newName;
     this._bio.textContent = newBio;
+  }
+
+  setUserAvatar(avatar) {
+    this._avatar.src = avatar;
   }
 
 }

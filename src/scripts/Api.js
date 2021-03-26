@@ -76,11 +76,30 @@ export class Api {
   }
 
   updateUserAvatar(newAvatar) {
-    fetch("https://mesto.nomoreparties.co/v1/cohortId/users/me/avatar", {
+    fetch("https://mesto.nomoreparties.co/v1//cohort-21/users/me/avatar", {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
         avatar: newAvatar
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  putLike(cardId) {
+    fetch(`https://mesto.nomoreparties.co/v1/cohortId/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this.headers,
+      body: JSON.stringify({
+
       })
     })
   }

@@ -1,6 +1,6 @@
 
 class Card {
-  constructor(card, cardTemplate, handleCardClick) {
+  constructor({ card, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardTemplate) {
     this._name = card.name;
     this._link = card.link;
     this._likes = card.likes;
@@ -18,6 +18,7 @@ class Card {
     this._element.querySelector(".elements__description").innerText = this._name;
     this._image.alt = this._name;
     this._image.src = this._link;
+
     this._like.innerText = this._likes.length;
 
     return this._element;

@@ -36,6 +36,26 @@ const cardListSelector = ".elements";
 
 const template = ".elements-template";
 
+function addCard(item) {
+  const card = new Card(
+    {
+      card: item,
+      handleCardClick: () => {
+        imageClick.open(item.link, item.name);
+      },
+      handleLikeClick: (item) => {
+        // ...что должно произойти при клике на лайк
+      },
+      handleDeleteIconClick: (card) => {
+        // ...что должно произойти при клике на удаление
+      }
+    },
+    template
+  )
+  return card.fillCard();
+  // const cardElement = card.fillCard();
+  // cardList.setItem(cardElement);
+}
 
 const api = new Api(options);
 
@@ -44,7 +64,8 @@ api.getInitialCards()
     const cardList = new Section({
       items: data,
       renderer: (item) => {
-        addCard(cardList, item);
+        const card = addCard(item);
+        cardList.setItem(card);
       }
     },
       cardListSelector
@@ -64,11 +85,9 @@ const popupAdd = new PopupWithForm({
       name: formData.title,
       link: formData.link
     }
-    api.addNewCard(newCard)
-
-    addCard(cardList, newCard)
-
-    //addCard(newCard);
+    //api.addNewCard(newCard)
+    // const card = addCard(newCard);
+    // cardList.setItem(card);
     popupAdd.close();
   }
 })
@@ -93,6 +112,8 @@ function openAddCardPopup() {
 const popupAvatar = new PopupWithForm({
   popupSelector: avatarPopup,
   handleFormSubmit: (formData) => {
+    api.updateUserAvatar(formData.link)
+    userInfo.setUserAvatar(formData.link)
     popupAvatar.close();
   }
 })
@@ -123,13 +144,13 @@ function openEditProfilePopup() {
 //   cardListSelector
 // );
 
-function addCard(cardList, item) {
-  const card = new Card(item, template, handleCardClick => {
-    imageClick.open(item.link, item.name);
-  });
-  const cardElement = card.fillCard();
-  cardList.setItem(cardElement);
-}
+// function addCard(cardList, item) {
+//   const card = new Card(item, template, handleCardClick => {
+//     imageClick.open(item.link, item.name);
+//   });
+//   const cardElement = card.fillCard();
+//   cardList.setItem(cardElement);
+// }
 
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);

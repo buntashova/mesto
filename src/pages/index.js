@@ -10,6 +10,9 @@ import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 
 import { Api } from "../scripts/Api.js";
+import { PopupWithDelete } from "../scripts/components/PopupWithDelete";
+
+const deletePopup = document.querySelector(".popup_type_delete");
 
 const avatarPopup = document.querySelector(".popup_type_avatar");
 
@@ -29,6 +32,8 @@ const bioInput = document.querySelector(".popup__input_type_bio");
 
 const avatar = ".profile__avatar";
 
+const buttonAvatar = ".profile__edt-avatar";
+
 const profileName = ".profile__name";
 const profileDescription = ".profile__description";
 
@@ -36,33 +41,66 @@ const cardListSelector = ".elements";
 
 const template = ".elements-template";
 
+const api = new Api(options);
+
+const userInfo = new UserInfo(profileName, profileDescription, avatar, api);
+userInfo.fillUserInfo();
+
+function deleteCard(card, evt) {
+  api.deleteCard(card._id)
+    .then(res => {
+      card.handleDelete(evt)
+    }
+    )
+    .catch(err => {
+      console.log("Невозможно удалить карточку.Ошибка:" + err)
+    })
+}
+
 function addCard(item) {
   const card = new Card(
     {
-      card: item,
+      data: item,
       handleCardClick: () => {
         imageClick.open(item.link, item.name);
       },
-      handleLikeClick: (item) => {
-        // ...что должно произойти при клике на лайк
+      handleLikeClick: (evt) => {
+        const like = card.isLike();
+
+        if (like === true) {
+          api.putLike(item._id)
+            .then(res => {
+              card.changeLike(evt)
+              card.updateLengthLikes(res.likes.length)
+            })
+
+        }
+        else {
+          api.deleteLike(item._id)
+            .then(res => {
+              card.changeLike(evt)
+              card.updateLengthLikes(res.likes.length)
+            })
+        }
+
       },
-      handleDeleteIconClick: (card) => {
-        // ...что должно произойти при клике на удаление
+      handleDeleteIconClick: (evt) => {
+        popupDel.setDeleteHandle(deleteCard, card, evt);
+
+        popupDel.open();
       }
     },
     template
   )
-  return card.fillCard();
-  // const cardElement = card.fillCard();
-  // cardList.setItem(cardElement);
+  return card.fillCard(userInfo.getUserInfo());
 }
 
-const api = new Api(options);
+let cardList;
 
 api.getInitialCards()
   .then(data => {
-    const cardList = new Section({
-      items: data,
+    cardList = new Section({
+      items: data.reverse(),
       renderer: (item) => {
         const card = addCard(item);
         cardList.setItem(card);
@@ -72,31 +110,45 @@ api.getInitialCards()
     );
     cardList.renderItems();
   })
+  .catch(err => {
+    console.log("Невозможно инициализировать карточки Ошибка:" + err)
+  })
 
-
-const userInfo = new UserInfo(profileName, profileDescription, avatar, api);
-userInfo.getUserInfo();
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
   handleFormSubmit: (formData) => {
-    const newCard =
+    let newCard =
     {
       name: formData.title,
-      link: formData.link
+      link: formData.link,
     }
-    //api.addNewCard(newCard)
-    // const card = addCard(newCard);
-    // cardList.setItem(card);
-    popupAdd.close();
+    api.addNewCard(newCard)
+      .then(data => {
+        newCard._id = data._id;
+        newCard.likes = data.likes;
+        const card = addCard(newCard);
+        cardList.setItem(card);
+        popupAdd.close();
+      })
+      .catch(err => {
+        console.log("Невозможно добавить карточку Ошибка:" + err)
+      })
+
+  }
+})
+
+const popupDel = new PopupWithDelete({
+  popupSelector: deletePopup,
+  handleFormSubmit: () => {
+    popupDel.close();
   }
 })
 
 const popupEdt = new PopupWithForm({
   popupSelector: editPopup,
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData.user, formData.bio);
-    popupEdt.close();
+    userInfo.setUserInfo(formData.user, formData.bio, popupEdt);
   }
 })
 
@@ -113,8 +165,14 @@ const popupAvatar = new PopupWithForm({
   popupSelector: avatarPopup,
   handleFormSubmit: (formData) => {
     api.updateUserAvatar(formData.link)
-    userInfo.setUserAvatar(formData.link)
-    popupAvatar.close();
+      .then(res => {
+        userInfo.setUserAvatar(formData.link);
+        popupAvatar.close();
+      }
+      )
+      .catch(err => {
+        console.log("Невозможно обновить аватар Ошибка:" + err)
+      })
   }
 })
 
@@ -133,32 +191,14 @@ function openEditProfilePopup() {
   popupEdt.open();
 }
 
-
-
-// const cardList = new Section({
-//   items: cards,
-//   renderer: (item) => {
-//     addCard(item);
-//   }
-// },
-//   cardListSelector
-// );
-
-// function addCard(cardList, item) {
-//   const card = new Card(item, template, handleCardClick => {
-//     imageClick.open(item.link, item.name);
-//   });
-//   const cardElement = card.fillCard();
-//   cardList.setItem(cardElement);
-// }
-
 editButton.addEventListener("click", openEditProfilePopup);
 addButton.addEventListener("click", openAddCardPopup);
-document.querySelector(avatar).addEventListener("click", openAvatarPopup)
+document.querySelector(buttonAvatar).addEventListener("click", openAvatarPopup);
 
 popupAdd.setEventListeners();
 popupEdt.setEventListeners();
 popupAvatar.setEventListeners();
+popupDel.setEventListeners();
 
 imageClick.setEventListeners();
 

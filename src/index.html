@@ -19,8 +19,10 @@
 
   <main>
     <section class="profile">
-      <img class="profile__avatar" alt="аватар">
-      <div class="profile__avatar-cover"></div>
+      <div class="profile__avatar">
+        <button type="button" class="profile__edt-avatar"></button>
+      </div>
+
       <div class="profile__info">
         <h1 class="profile__name"></h1>
         <button type="button" class="profile__button-edt"></button>
@@ -81,6 +83,14 @@
         required>
       <span id="url-error" class="popup__error"></span>
       <button type="submit" class="popup__button">Сохранить</button>
+      <button type="button" class="popup__close"></button>
+    </form>
+  </div>
+
+  <div class="popup popup_type_delete">
+    <form name="popup-form-delete" class="popup__form" novalidate>
+      <h3 class="popup__title">Вы уверены?</h3>
+      <button type="submit" class="popup__button">Да</button>
       <button type="button" class="popup__close"></button>
     </form>
   </div>

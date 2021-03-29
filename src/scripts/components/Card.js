@@ -71,10 +71,10 @@ class Card {
     });
 
     this._element.querySelector(".elements__like").addEventListener("click", (evt) => {
-      if (this._isLike === false) {
+      if (this._isLike = !this._isLike) {
         this._isLike = true;
       }
-      else if (this._isLike === true) {
+      else {
         this._isLike = false;
       }
       this._handleLikeClick(evt);

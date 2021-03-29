@@ -44,18 +44,28 @@ const template = ".elements-template";
 const api = new Api(options);
 
 const userInfo = new UserInfo(profileName, profileDescription, avatar, api);
-userInfo.fillUserInfo();
 
-function deleteCard(card, evt) {
-  api.deleteCard(card._id)
-    .then(res => {
-      card.handleDelete(evt)
-    }
-    )
-    .catch(err => {
-      console.log("Невозможно удалить карточку.Ошибка:" + err)
-    })
-}
+Promise.all([
+  api.getInfoUser(),
+  api.getInitialCards(),
+])
+  .then(([UserData, CardData]) => {
+    userInfo.fillUserInfo(UserData);
+
+    cardList = new Section({
+      items: CardData.reverse(),
+      renderer: (item) => {
+        const card = addCard(item);
+        cardList.setItem(card);
+      }
+    },
+      cardListSelector
+    );
+    cardList.renderItems();
+  })
+  .catch(err => {
+    console.log("Невозможно получить информацию от сервера. Ошибка:" + err)
+  })
 
 function addCard(item) {
   const card = new Card(
@@ -85,7 +95,7 @@ function addCard(item) {
 
       },
       handleDeleteIconClick: (evt) => {
-        popupDel.setDeleteHandle(deleteCard, card, evt);
+        popupDel.setDeleteHandle(card, evt);
 
         popupDel.open();
       }
@@ -96,24 +106,6 @@ function addCard(item) {
 }
 
 let cardList;
-
-api.getInitialCards()
-  .then(data => {
-    cardList = new Section({
-      items: data.reverse(),
-      renderer: (item) => {
-        const card = addCard(item);
-        cardList.setItem(card);
-      }
-    },
-      cardListSelector
-    );
-    cardList.renderItems();
-  })
-  .catch(err => {
-    console.log("Невозможно инициализировать карточки Ошибка:" + err)
-  })
-
 
 const popupAdd = new PopupWithForm({
   popupSelector: addPopup,
@@ -141,6 +133,15 @@ const popupAdd = new PopupWithForm({
 const popupDel = new PopupWithDelete({
   popupSelector: deletePopup,
   handleFormSubmit: () => {
+    const deleteInfo = popupDel.getDeleleInfo();
+    api.deleteCard(deleteInfo.card._id)
+      .then(res => {
+        deleteInfo.card.handleDelete(deleteInfo.evt)
+      }
+      )
+      .catch(err => {
+        console.log("Невозможно удалить карточку.Ошибка:" + err)
+      })
     popupDel.close();
   }
 })

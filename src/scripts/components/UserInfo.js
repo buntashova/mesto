@@ -6,17 +6,11 @@ class UserInfo {
     this._api = api
   }
 
-  fillUserInfo() {
-    this._api.getInfoUser()
-      .then(data => {
-        this._name.textContent = data.name;
-        this._bio.textContent = data.about;
-        this._avatar.style.backgroundImage = `url("${data.avatar}")`;
-        this._id = data._id
-      })
-      .catch(err => {
-        console.log("Невозможно получить данные пользователя Ошибка: " + err)
-      })
+  fillUserInfo(data) {
+    this._name.textContent = data.name;
+    this._bio.textContent = data.about;
+    this._avatar.style.backgroundImage = `url("${data.avatar}")`;
+    this._id = data._id
   }
   getUserInfo() {
     const info = {

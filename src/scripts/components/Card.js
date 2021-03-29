@@ -15,10 +15,11 @@ class Card {
 
   }
 
-  fillCard(myInfo) {
+  fillCard(myInfo, card) {
     this._element = this._getTemplate();
     this._image = this._element.querySelector(".elements__image");
     this._like = this._element.querySelector(".elements__amount-like")
+    this._card = card;
 
     this._setEventListeners();
 
@@ -35,6 +36,9 @@ class Card {
 
     })
 
+    if (card.owner._id != myInfo.id) {
+      this._element.querySelector(".elements__trash").remove();
+    }
     return this._element;
   }
 

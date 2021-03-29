@@ -102,7 +102,7 @@ function addCard(item) {
     },
     template
   )
-  return card.fillCard(userInfo.getUserInfo());
+  return card.fillCard(userInfo.getUserInfo(), item);
 }
 
 let cardList;
